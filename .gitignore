@@ -1,0 +1,11 @@
+# Python en omgeving
+venv/
+__pycache__/
+*.pyc
+
+# Database (verberg de data, niet het bouwplan!)
+*.db
+*.sqlite3
+
+# Geheime sleutels
+.env
