@@ -23,6 +23,13 @@ with app.app_context():
 def home():
     return render_template("homepage.html")
 
+@app.route("/over_ons")
+def over_ons():
+    return render_template("over_ons.html")
+
+@app.route("/profielen")
+def profielen():
+    return render_template("profielen.html")    
 
 @app.route("/registreren", methods=["GET", "POST"])
 def registreren():
