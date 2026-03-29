@@ -47,10 +47,21 @@ def registreren():
         gehasht_wachtwoord = generate_password_hash(form.password.data)
 
         # 3. Nieuwe gebruiker aanmaken (we gebruiken email als gebruikersnaam)
-        nieuwe_gebruiker = users(gebruikersnaam=form.email.data, wachtwoord=gehasht_wachtwoord, leeftijd=form.leeftijd.data, geslacht=form.geslacht.data, bio=form.bio.data)
-        
+        nieuwe_gebruiker = users(gebruikersnaam=form.email.data, wachtwoord=gehasht_wachtwoord)
+
         # 4. Opslaan in de database
         db.session.add(nieuwe_gebruiker)
+        db.session.commit()
+
+        nieuwe_profiel = profiles(
+            gebruiker_id=nieuwe_gebruiker.id,
+            naam=form.email.data,
+            leeftijd=form.leeftijd.data,
+            geslacht=form.geslacht.data,
+            bio=form.bio.data
+        )
+
+        db.session.add(nieuwe_profiel)
         db.session.commit()
 
         # 5. Na succesvol registreren doorsturen naar de inlogpagina
