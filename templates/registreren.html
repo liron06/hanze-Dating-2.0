@@ -1,58 +1,79 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5 mb-5">
+<div class="container mt-5">
+
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow p-4">
-                <h1 class="text-center mb-4">Maak een Account aan</h1>
-                
-                <form method="POST">
+
+        <div class="col-md-6 col-lg-4 text-center">
+
+
+
+            <h1 class="mb-4">Registreren</h1>
+
+
+
+            <div class="form-container">
+
+                <form id="login-form" method="post">
+
                     {{ form.hidden_tag() }}
 
-                    <h5 class="border-bottom pb-2 mb-3">Login gegevens</h5>
-                    <div class="mb-3">
-                        {{ form.email.label(class="form-label") }}
-                        {{ form.email(class="form-control", placeholder="naam@voorbeeld.nl") }}
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            {{ form.password.label(class="form-label") }}
-                            {{ form.password(class="form-control") }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form.confirm_password.label(class="form-label") }}
-                            {{ form.confirm_password(class="form-control") }}
-                        </div>
-                    </div>
 
-                    <h5 class="border-bottom pb-2 mt-4 mb-3">Je Profiel</h5>
-                    <div class="mb-3">
-                        {{ form.naam.label(class="form-label") }}
-                        {{ form.naam(class="form-control", placeholder="Hoe mogen we je noemen?") }}
-                    </div>
-                    
+
+                    <p class="mb-3">{{ form.email.label }} <br> {{ form.email }}</p>
+
+                    <p class="mb-3">{{ form.password.label}} <br> {{ form.password}}</p>
+
+                    <p class="mb-3">{{ form.confirm_password.label}} <br> {{ form.confirm_password}}</p>
+
                     <div class="row mb-3">
+
                         <div class="col-md-6">
-                            {{ form.leeftijd.label(class="form-label") }}
+
+                            {{ form.leeftijd.label }} <br>
+
                             {{ form.leeftijd(class="form-control") }}
+
                         </div>
+
+
+
                         <div class="col-md-6">
-                            {{ form.geslacht.label(class="form-label") }}
-                            {{ form.geslacht(class="form-select") }} </div>
+
+                            {{ form.geslacht.label }} <br>
+
+                            {{ form.geslacht(class="form-control") }}
+
+                        </div>
+
                     </div>
+
+
 
                     <div class="mb-3">
-                        {{ form.bio.label(class="form-label") }}
-                        {{ form.bio(class="form-control", rows="3") }}
+
+                        {{ form.bio.label }} <br>
+
+                        {{ form.bio(class="form-control") }}
+
                     </div>
 
-                    <div class="d-grid gap-2 mt-4">
-                        {{ form.submit(class="btn btn-primary btn-lg") }}
-                    </div>
+
+
+                    <p class="mt-4">{{ form.submit }}</p>
+
+
+
                 </form>
+
             </div>
+
+
+
         </div>
+
     </div>
+
 </div>
 {% endblock %}
