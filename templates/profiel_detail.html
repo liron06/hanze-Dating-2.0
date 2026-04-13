@@ -22,6 +22,16 @@
                     
                     <div class="mt-5">
                         <button class="btn btn-primary btn-lg px-4 me-2">Stuur een bericht</button>
+                        {% if current_user.id == profiel.gebruiker_id %}
+    <div class="mt-4 p-3 bg-light rounded border">
+        <h6 class="text-muted mb-3">Accountbeheer</h6>
+        <a href="{{ url_for('bewerk_profiel') }}" class="btn btn-warning me-2">Profiel Aanpassen</a>
+        
+        <form action="{{ url_for('verwijder_account') }}" method="POST" class="d-inline" onsubmit="return confirm('Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');">
+            <button type="submit" class="btn btn-danger">Account Verwijderen</button>
+        </form>
+    </div>
+{% endif %}
                     </div>
                 </div>
             </div>

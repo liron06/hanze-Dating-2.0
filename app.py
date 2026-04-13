@@ -54,7 +54,42 @@ def profiel_detail(user_id):
     # first_or_404() geeft een nette foutmelding als het ID niet bestaat
     gekozen_profiel = profiles.query.filter_by(gebruiker_id=user_id).first_or_404()
     
-    return render_template("profiel_detail.html", profiel=gekozen_profiel)  
+    return render_template("profiel_detail.html", profiel=gekozen_profiel)
+
+@app.route("/profiel/bewerken", methods=["GET", "POST"])
+@login_required
+def bewerk_profiel():
+    # We halen het profiel op van de ingelogde gebruiker
+    profiel = profiles.query.filter_by(gebruiker_id=current_user.id).first_or_404()
+    form = RegistratieForm(obj=profiel) # 'obj' vult het formulier alvast in met oude data!
+
+    if form.validate_on_submit():
+        profiel.naam = form.naam.data
+        profiel.leeftijd = form.leeftijd.data
+        profiel.geslacht = form.geslacht.data
+        profiel.bio = form.bio.data
+        
+        db.session.commit()
+        flash("Je profiel is bijgewerkt!", "success")
+        return redirect(url_for('profiel_detail', user_id=current_user.id))
+
+    return render_template("bewerk_profiel.html", form=form)
+
+@app.route("/account/verwijderen", methods=["POST"])
+@login_required
+def verwijder_account():
+    user = users.query.get(current_user.id)
+    profiel = profiles.query.filter_by(gebruiker_id=current_user.id).first()
+
+    # Verwijder beide records
+    if profiel:
+        db.session.delete(profiel)
+    db.session.delete(user)
+    db.session.commit()
+
+    logout_user() # Log de gebruiker uit na verwijderen
+    flash("Je account is succesvol verwijderd. Jammer dat je weggaat!", "info")
+    return redirect(url_for('home'))
 
 @app.route("/registreren", methods=["GET", "POST"])
 def registreren():
