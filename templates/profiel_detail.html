@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    
+    <a href="{{ url_for('profielen') }}" class="btn btn-outline-secondary mb-4">&larr; Terug naar alle singles</a>
+
+    <div class="card shadow">
+        <div class="row g-0">
+            
+            <div class="col-md-5">
+                <img src="https://placehold.co/600x600?text={{ profiel.naam }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="Profielfoto van {{ profiel.naam }}">
+            </div>
+            
+            <div class="col-md-7">
+                <div class="card-body p-5">
+                    <h1 class="card-title display-5 fw-bold mb-1">{{ profiel.naam }}</h1>
+                    <h4 class="text-muted mb-4">{{ profiel.leeftijd }} jaar &bull; {{ profiel.geslacht }}</h4>
+                    
+                    <h5 class="fw-bold mt-4">Over mij</h5>
+                    <p class="card-text lead">{{ profiel.bio }}</p>
+                    
+                    <div class="mt-5">
+                        <button class="btn btn-primary btn-lg px-4 me-2">Stuur een bericht</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

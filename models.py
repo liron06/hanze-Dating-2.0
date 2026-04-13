@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from flask_migrate import Migrate
@@ -7,7 +8,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 
-class users(db.Model):
+class users(db.Model, UserMixin):
     __tablename__ = "gebruikers"
 
     id: Mapped[int] = mapped_column(primary_key=True)
