@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, SubmitField, IntegerField, SelectField, TextAreaField
+from wtforms import EmailField, PasswordField, SubmitField, IntegerField, SelectField, TextAreaField, StringField
 from wtforms.validators import InputRequired, Length, EqualTo, number_range
 
 class LoginForm(FlaskForm):
@@ -8,6 +8,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Inloggen', render_kw={"class":"btn btn-primary"})
 
 class RegistratieForm(FlaskForm):
+    naam = StringField('Naam', validators=[InputRequired(), Length(min=2, max=100)])
     email = EmailField('Email')
     password = PasswordField('Wachtwoord')
     confirm_password = PasswordField('Herhaal wachtwoord', validators=[EqualTo('password', message='Wachtwoorden moeten overeenkomen!')])

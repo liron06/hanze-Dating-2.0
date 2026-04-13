@@ -55,7 +55,7 @@ def registreren():
 
         nieuwe_profiel = profiles(
             gebruiker_id=nieuwe_gebruiker.id,
-            naam=form.email.data,
+            naam=form.naam.data,
             leeftijd=form.leeftijd.data,
             geslacht=form.geslacht.data,
             bio=form.bio.data
