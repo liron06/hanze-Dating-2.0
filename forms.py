@@ -8,7 +8,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Inloggen', render_kw={"class":"btn btn-primary"})
 
 class RegistratieForm(FlaskForm):
-    naam = StringField('Naam', validators=[InputRequired(), Length(min=2, max=100)])
+    naam = StringField('Volledige naam', validators=[InputRequired(), Length(min=2, max=100)])
     email = EmailField('Email')
     password = PasswordField('Wachtwoord')
     confirm_password = PasswordField('Herhaal wachtwoord', validators=[EqualTo('password', message='Wachtwoorden moeten overeenkomen!')])

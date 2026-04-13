@@ -2,78 +2,67 @@
 
 {% block content %}
 <div class="container mt-5">
-
     <div class="row justify-content-center">
-
-        <div class="col-md-6 col-lg-4 text-center">
-
-
+        <div class="col-md-8 col-lg-6 text-center">
 
             <h1 class="mb-4">Registreren</h1>
 
-
-
             <div class="form-container">
-
                 <form id="login-form" method="post">
-
                     {{ form.hidden_tag() }}
 
-                    <p class="mb-3">{{ form.naam.label }} <br> {{ form.naam(class="form-control") }}</p>
+                    <div class="mb-4 p-3 border rounded text-start">
+                        <h4 class="mb-3 text-center">Profielgegevens</h4>
 
-                    <p class="mb-3">{{ form.email.label }} <br> {{ form.email }}</p>
+                        <p class="mb-3">
+                            {{ form.naam.label }} <br>
+                            {{ form.naam(class="form-control") }}
+                        </p>
 
-                    <p class="mb-3">{{ form.password.label}} <br> {{ form.password}}</p>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                {{ form.leeftijd.label }} <br>
+                                {{ form.leeftijd(class="form-control") }}
+                            </div>
 
-                    <p class="mb-3">{{ form.confirm_password.label}} <br> {{ form.confirm_password}}</p>
-
-                    <div class="row mb-3">
-
-                        <div class="col-md-6">
-
-                            {{ form.leeftijd.label }} <br>
-
-                            {{ form.leeftijd(class="form-control") }}
-
+                            <div class="col-md-6">
+                                {{ form.geslacht.label }} <br>
+                                {{ form.geslacht(class="form-control") }}
+                            </div>
                         </div>
 
-
-
-                        <div class="col-md-6">
-
-                            {{ form.geslacht.label }} <br>
-
-                            {{ form.geslacht(class="form-control") }}
-
+                        <div class="mb-3">
+                            {{ form.bio.label }} <br>
+                            {{ form.bio(class="form-control") }}
                         </div>
-
                     </div>
 
+                    <div class="mb-4 p-3 border rounded text-start">
+                        <h4 class="mb-3 text-center">Inloggegevens</h4>
 
+                        <p class="mb-3">
+                            {{ form.email.label }} <br>
+                            {{ form.email(class="form-control") }}
+                        </p>
 
-                    <div class="mb-3">
+                        <p class="mb-3">
+                            {{ form.password.label }} <br>
+                            {{ form.password(class="form-control") }}
+                        </p>
 
-                        {{ form.bio.label }} <br>
-
-                        {{ form.bio(class="form-control") }}
-
+                        <p class="mb-3">
+                            {{ form.confirm_password.label }} <br>
+                            {{ form.confirm_password(class="form-control") }}
+                        </p>
                     </div>
 
-
-
-                    <p class="mt-4">{{ form.submit }}</p>
-
-
-
+                    <p class="mt-4 text-center">
+                        {{ form.submit }}
+                    </p>
                 </form>
-
             </div>
 
-
-
         </div>
-
     </div>
-
 </div>
 {% endblock %}
