@@ -21,7 +21,9 @@
                     <p class="card-text lead">{{ profiel.bio }}</p>
                     
                     <div class="mt-5">
+                        {% if current_user.id != profiel.gebruiker_id %}
                         <button class="btn btn-primary btn-lg px-4 me-2">Stuur een bericht</button>
+                        {% endif %}
                         {% if current_user.id == profiel.gebruiker_id %}
     <div class="mt-4 p-3 bg-light rounded border">
         <h6 class="text-muted mb-3">Accountbeheer</h6>
