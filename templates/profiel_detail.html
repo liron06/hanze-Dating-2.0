@@ -21,9 +21,19 @@
                     <p class="card-text lead">{{ profiel.bio }}</p>
                     
                     <div class="mt-5">
-                        {% if current_user.id != profiel.gebruiker_id %}
-                        <button class="btn btn-primary btn-lg px-4 me-2">Stuur een bericht</button>
-                        {% endif %}
+                        <div class="mt-5">
+                            <p class="text-muted">Dit profiel heeft {{ Like.query.filter_by(profile_id=profiel.id).count() }} likes</p>
+    {% if current_user.id != profiel.gebruiker_id %}
+        
+        
+        <form action="{{ url_for('like_profiel', profile_id=profiel.id) }}" method="POST">
+            <button type="submit" class="btn btn-danger btn-lg px-4 me-2">
+                Like deze single
+            </button>
+        </form>
+    {% endif %}
+    
+    </div>
                         {% if current_user.id == profiel.gebruiker_id %}
     <div class="mt-4 p-3 bg-light rounded border">
         <h6 class="text-muted mb-3">Accountbeheer</h6>

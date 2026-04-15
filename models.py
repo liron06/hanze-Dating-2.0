@@ -40,3 +40,11 @@ class profiles(db.Model):
         self.leeftijd = leeftijd
         self.geslacht = geslacht
         self.bio = bio
+
+class Like(db.Model):
+    __tablename__ = "likes"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    # Wie geeft de like?
+    user_id: Mapped[int] = mapped_column(ForeignKey("gebruikers.id"), nullable=False)
+    # Welk profiel krijgt de like?
+    profile_id: Mapped[int] = mapped_column(ForeignKey("profielen.id"), nullable=False)

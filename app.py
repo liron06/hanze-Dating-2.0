@@ -1,7 +1,7 @@
 from flask import Flask, render_template, session, redirect, flash, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import LoginForm, RegistratieForm
-from models import db, migrate, users, profiles
+from models import db, migrate, users, profiles, Like
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import os
@@ -23,12 +23,16 @@ with app.app_context():
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'inloggen' # Waar moet iemand heen als hij niet is ingelogd?
+login_manager.login_view = 'inloggen'
 login_manager.login_message_category = 'info'
 
 @login_manager.user_loader
 def load_user(user_id):
     return users.query.get(int(user_id))
+
+@app.context_processor
+def inject_models():
+    return dict(Like=Like)
 
 
 @app.route("/")
@@ -47,21 +51,33 @@ def profielen():
 
     return render_template("profielen.html", profielen=alle_profielen)
 
-@app.route("/profiel/<int:user_id>") # <int:user_id> vangt het getal uit de URL op
+@app.route("/profiel/<int:user_id>")
 @login_required
 def profiel_detail(user_id):
-    # We zoeken in de profielen tabel naar het profiel dat bij dit user_id hoort
-    # first_or_404() geeft een nette foutmelding als het ID niet bestaat
     gekozen_profiel = profiles.query.filter_by(gebruiker_id=user_id).first_or_404()
     
     return render_template("profiel_detail.html", profiel=gekozen_profiel)
 
+@app.route("/like/<int:profile_id>", methods=["POST"])
+@login_required
+def like_profiel(profile_id):
+    bestaande_like = Like.query.filter_by(user_id=current_user.id, profile_id=profile_id).first()
+    
+    if bestaande_like:
+        flash("Je hebt dit profiel al een hartje gegeven!", "info")
+    else:
+        nieuwe_like = Like(user_id=current_user.id, profile_id=profile_id)
+        db.session.add(nieuwe_like)
+        db.session.commit()
+        flash("Like verstuurd! ❤️", "success")
+    
+    return redirect(url_for('profiel_detail', user_id=profiles.query.get(profile_id).gebruiker_id))   
+
 @app.route("/profiel/bewerken", methods=["GET", "POST"])
 @login_required
 def bewerk_profiel():
-    # We halen het profiel op van de ingelogde gebruiker
     profiel = profiles.query.filter_by(gebruiker_id=current_user.id).first_or_404()
-    form = RegistratieForm(obj=profiel) # 'obj' vult het formulier alvast in met oude data!
+    form = RegistratieForm(obj=profiel)
 
     if form.validate_on_submit():
         profiel.naam = form.naam.data
@@ -81,13 +97,12 @@ def verwijder_account():
     user = users.query.get(current_user.id)
     profiel = profiles.query.filter_by(gebruiker_id=current_user.id).first()
 
-    # Verwijder beide records
     if profiel:
         db.session.delete(profiel)
     db.session.delete(user)
     db.session.commit()
 
-    logout_user() # Log de gebruiker uit na verwijderen
+    logout_user()
     flash("Je account is succesvol verwijderd. Jammer dat je weggaat!", "info")
     return redirect(url_for('home'))
 
@@ -134,18 +149,17 @@ def inloggen():
         gebruiker = users.query.filter_by(gebruikersnaam=form.email.data).first()
 
         if gebruiker and check_password_hash(gebruiker.wachtwoord, form.password.data):
-            # DIT IS DE UPGRADE:
             login_user(gebruiker) 
             flash('Succesvol ingelogd!', 'success')
-            return redirect(url_for("home")) # Gebruik url_for voor veiligheid
+            return redirect(url_for("home"))
         else:
             flash('Verkeerd e-mailadres of wachtwoord', 'danger')
 
     return render_template("inloggen.html", form=form)
 
 @app.route("/logout")
-@login_required # Je kunt alleen uitloggen als je ingelogd bent!
+@login_required
 def uitloggen():
-    logout_user() # Dit schoont de hele sessie en cookies voor je op
+    logout_user()
     flash("Je bent nu uitgelogd.", "info")
     return redirect(url_for("home"))
