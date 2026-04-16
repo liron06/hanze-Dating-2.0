@@ -138,3 +138,8 @@
   opacity: 1;
   transition: translate 0.25s 0.25s, opacity 0.5s 0.25s;
 }
+
+.logo {
+  height: 50px;
+  object-fit: contain;
+}
