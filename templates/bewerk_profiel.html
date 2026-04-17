@@ -4,13 +4,14 @@
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <div class="card shadow p-4 border-warning"> <h1 class="text-center mb-4">Profiel Bewerken</h1>
-                
+            <div class="card shadow p-4 border-warning">
+                <h1 class="text-center mb-4">Profiel Bewerken</h1>
+
                 <form method="POST">
                     {{ form.hidden_tag() }}
 
                     <h5 class="border-bottom pb-2 mb-3 text-muted">Mijn Gegevens</h5>
-                    
+
                     <div class="mb-3">
                         {{ form.email.label(class="form-label") }}
                         {{ form.email(class="form-control", readonly=true) }}
@@ -21,7 +22,7 @@
                         {{ form.naam.label(class="form-label") }}
                         {{ form.naam(class="form-control") }}
                     </div>
-                    
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             {{ form.leeftijd.label(class="form-label") }}
@@ -32,6 +33,10 @@
                             {{ form.geslacht(class="form-select") }}
                         </div>
                     </div>
+                    <div class="mb-3">
+                        {{ form.profielfoto.label(class="form-label") }}
+                        {{ form.profielfoto(class="form-control") }}
+                    </div>
 
                     <div class="mb-3">
                         {{ form.bio.label(class="form-label") }}
@@ -40,7 +45,8 @@
 
                     <div class="d-grid gap-2 mt-4">
                         {{ form.submit(class="btn btn-warning btn-lg", value="Wijzigingen Opslaan") }}
-                        <a href="{{ url_for('profiel_detail', user_id=current_user.id) }}" class="btn btn-outline-secondary">Annuleren</a>
+                        <a href="{{ url_for('profiel_detail', user_id=current_user.id) }}"
+                            class="btn btn-outline-secondary">Annuleren</a>
                     </div>
                 </form>
             </div>

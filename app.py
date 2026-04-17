@@ -83,7 +83,7 @@ def bewerk_profiel():
         profiel.naam = form.naam.data
         profiel.leeftijd = form.leeftijd.data
         profiel.geslacht = form.geslacht.data
-        profielfoto=form.profielfoto.data
+        profielfoto = form.profielfoto.data
         profiel.bio = form.bio.data
         
         db.session.commit()

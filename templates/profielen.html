@@ -2,26 +2,26 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="row g-4 justify-content-center">
-        {% for p in profielen %}
-        <div class="col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
-            
-            <div class="profile-card">
-              <img src="{{ p.profielfoto }}" alt="Foto van {{ p.naam }}" />
-              <section>
-                <h2>{{ p.naam }}</h2>
-                <p>{{ p.bio | truncate(60) }}</p>
-                <div>
-                  <div class="tag">
-                    <i class="fa-solid fa-user"></i> {{ p.leeftijd }} jaar
-                  </div>
-                  <a href="{{ url_for('profiel_detail', user_id=p.gebruiker_id) }}" class="profiel-btn">Bekijk</a>
-                </div>
-              </section>
-            </div>
+  <div class="row g-4 justify-content-center">
+    {% for p in profielen %}
+    <div class="col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
 
-        </div>
-        {% endfor %}
+      <div class="profile-card">
+        <img src="{{ p.profielfoto }}" alt="Foto van {{ p.naam }}" />
+        <section>
+          <h2>{{ p.naam }}</h2>
+          <p>{{ p.bio | truncate(60) }}</p>
+          <div>
+            <div class="tag">
+              <i class="fa-solid fa-user"></i> {{ p.leeftijd }} jaar
+            </div>
+            <a href="{{ url_for('profiel_detail', user_id=p.gebruiker_id) }}" class="profiel-btn">Bekijk</a>
+          </div>
+        </section>
+      </div>
+
     </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
